@@ -4,9 +4,9 @@ import os
 from queue import Queue
 from time import time
 from threading import Thread
-import sys
 from PIL import Image
 from io import BytesIO
+
 
 class DownloadWorker(Thread):
     def __init__(self, queue):
@@ -29,28 +29,17 @@ class DownloadWorker(Thread):
             self.queue.task_done()
 
 
-def main(args):
+def download_urls(base_folder='Images', threads=10):
 
     print('=====================================================================================================')
     print('                                   DOWNLOAD STARTED                                                  ')
     print('=====================================================================================================')
     ts = time()
 
-    base_folder = 'Data/Images/'
-    threads = 10
+    base_folder = os.path.join(base_folder, 'Images')
 
-    if len(args) > 2:
-        raise Exception('Error. Please insert only destination folder and number of threads')
+    print('Image destination folder: {}'.format(base_folder))
 
-    for arg in args:
-        if arg.isdigit():
-            threads = arg
-        elif isinstance(arg, str):
-            base_folder = arg
-        else:
-            raise Exception('Error command argument not valid. Insert only destination folder and number of threads')
-
-    print('Destination folder: {}'.format(base_folder))
     # Prepare output folder
     if not os.path.exists(base_folder):
         os.makedirs(base_folder)
@@ -80,6 +69,3 @@ def main(args):
     queue.join()
     print('Took {}'.format(time() - ts))
 
-
-if __name__ == '__main__':
-    main(sys.argv[1:])

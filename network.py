@@ -18,11 +18,10 @@ def define_scope(function):
 
 class Network:
 
-    def __init__(self, data, labels, learning_rate, is_training):
+    def __init__(self, data, labels, learning_rate):
         self.data = data
         self.labels = labels
         self.learning_rate = learning_rate
-        self.is_training = is_training
         self.forward_pass
         self.optimize
         self.accuracy
@@ -44,6 +43,9 @@ class Network:
 
             # Local latent variables
             x = tf.layers.dense(x, units=1024, activation=activation)
+
+            # Dropout
+            self.is_training = tf.placeholder_with_default(True, (), name='is_training')
             x = tf.layers.dropout(inputs=x, rate=0.4, training=self.is_training)
 
             self.logits = tf.layers.dense(inputs=x, units=10)
@@ -55,7 +57,6 @@ class Network:
 
             return predictions
 
-
     @define_scope
     def optimize(self):
         with tf.variable_scope('Optimize'):
@@ -63,7 +64,6 @@ class Network:
             optimizer = tf.train.AdamOptimizer(self.learning_rate).minimize(loss)
             tf.summary.scalar('batch_loss', loss)
         return optimizer
-
 
     @define_scope
     def accuracy(self):

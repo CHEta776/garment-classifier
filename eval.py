@@ -23,6 +23,7 @@ graph = tf.Graph()
 with tf.Session(graph=graph) as sess:
     # Prepare data to predict
     filenames = get_files(FLAGS.data_path)
+    filenames = ['Data/Images/'+i for i in ['1.png', '5.png', '108.png', '175.png', '33.png']]
     dataset = load_unlabeled_data(filenames, FLAGS.batch_size)
     iterator = dataset.make_initializable_iterator()
     input_batch = iterator.get_next()
