@@ -3,7 +3,8 @@ This repository contain an implementation of a Convolutional Neural Networks for
 classifying garments together with a data scraper script, used to download images
 from Zalando's online catalogue.
 
-See in depth tutorial on Medium
+See in depth tutorial on Medium [Automatic Classification of an online Fashion Catalogue: The Simple Way
+](https://medium.com/@miguelmndez_30551/automatic-classification-of-an-online-fashion-catalogue-the-simple-way-2a4b13a2af0a)
 
 ## Scraper
 
